@@ -28,16 +28,16 @@ ROLE: Zwykły USER oraz ADMIN
 - 2FA generowany po zalogowaniu (uuid...) (unikalny, niezmienialny, zapomnisz, jesteś w dupie)
 - CLI, przypisujący konto do roli admina
 
-1. PROFIL
+2. PROFIL
 - re/upload/delete zdjęcia
 - zmiana maila/hasła
 - zmiana danych
 
-1. GEOLOKACJA
+3. GEOLOKACJA
 - filtrowanie/sortowanie
 - połączenie z 3rd party (ipstack.com)
 - zapisywanie danych o geolokacji do pg db (również dane historyczne) w formie json (później csv/pdf...) **Jak przechowywać dane otrzymane z API?**
 - wstępnie z node, potem serverless
 
-1. Zakładka USERS
+4. Zakładka USERS
 - ADMIN ma możliwość zobaczenia listy użytkowników/usunięcia
