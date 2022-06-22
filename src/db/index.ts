@@ -1,14 +1,18 @@
 require('dotenv').config()
 import 'reflect-metadata';
-import { DataSource } from 'typeorm';
-import { postgresConfig } from './config';
+import { AppDataSource } from './config';
+import { User } from '@modules/user/entity/User';
 
-export const AppDataSource = new DataSource({
-  ...postgresConfig,
-  type: 'postgres',
-  synchronize: false,
-  logging: false,
-  entities: ['src/entities/**/*.entity{.ts,.js}'],
-  migrations: ['src/migrations/**/*{.ts,.js}'],
-  subscribers: ['src/subscribers/**/*{.ts,.js}'],
-});
+export const initDbConnection = () => {
+  AppDataSource.initialize()
+  .then(async () => {  
+    await AppDataSource.manager.save(
+        AppDataSource.manager.create(User, {
+            firstName: "Kamil",
+            lastName: "Ślimak",
+            age: 18
+        })
+    )
+  })
+  .catch(error => console.error(error)); 
+}

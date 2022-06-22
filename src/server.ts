@@ -1,13 +1,12 @@
 import express from 'express'
 import dotenv from 'dotenv';
-import { AppDataSource } from './db';
-import { User } from './modules/user/entity/User';
+import { initDbConnection } from './db';
 
 dotenv.config();
 
-const app = express();
+const startServer = ({ port = process.env.PORT } = {}): Promise<void> => {
+    const app = express();
 
-function startServer({ port = process.env.PORT } = {}): Promise<void> {
     app.use(express.json());
 
     app.get('/', (_, res) => {
@@ -25,20 +24,10 @@ function startServer({ port = process.env.PORT } = {}): Promise<void> {
 
 export async function main() {
   try {
-    AppDataSource.initialize().then(async () => {
-      startServer();
-    
-      await AppDataSource.manager.save(
-          AppDataSource.manager.create(User, {
-              firstName: "Kamil",
-              lastName: "Ślimak",
-              age: 18
-          })
-      )
-    }).catch(error => console.log(error));
-  }
-  catch (err) {
-    console.error(err);
+    initDbConnection();
+    startServer();
+  } catch(error) {
+    console.error(error)
   }
 }
 
