@@ -1,4 +1,5 @@
-import { DataSource } from "typeorm/data-source";
+import { User } from "../modules/user/entity/User";
+import { DataSource } from "typeorm";
 
 const postgresConfig = {
   host: process.env.POSTGRES_HOST,
@@ -11,9 +12,12 @@ const postgresConfig = {
 export const AppDataSource = new DataSource({
   ...postgresConfig,
   type: 'postgres',
-  synchronize: false,
+  synchronize: true,
   logging: false,
-  entities: ['src/entities/**/*.entity{.ts,.js}'],
+  ssl: {
+    rejectUnauthorized: false
+  },
+  entities: [User],
   migrations: ['src/migrations/**/*{.ts,.js}'],
   subscribers: ['src/subscribers/**/*{.ts,.js}'],
 });
