@@ -6,11 +6,11 @@ export class User extends BaseEntity {
     @PrimaryGeneratedColumn()
     id!: number
 
-    @Column({ type: 'text', nullable: true })
+    @Column({ nullable: true })
     firstName: string
 
-    @Column()
-    lastName!: string
+    @Column({ nullable: true })
+    lastName: string
 
     @Column()
     email: string
