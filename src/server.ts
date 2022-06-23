@@ -12,7 +12,7 @@ export class App {
     this.databaseInstance = Database.initConnection();
   }
 
-  startServer({ port = process.env.PORT } = {}): Promise<void> {
+  startServer({ port = this.configuration.port } = {}): Promise<void> {
     const app = express();
 
     app.use(express.json());
