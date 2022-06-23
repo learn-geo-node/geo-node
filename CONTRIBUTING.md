@@ -5,7 +5,7 @@
 * `src/` main app folder
 * `src/db` orm/db configuration
 * `src/modules/` - specific modules like User or Auth,
-* `src/services/` - external services, ex. 3rd-party API
+* `src/clients/` - external clients, ex. 3rd-party API
 * `src/utils/` - global utilities that can be used anywhere in the project
 * `src/errors` - error classes definition
 * `db/` - seeds & migrations, also dummy data if needed

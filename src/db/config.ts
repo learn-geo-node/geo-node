@@ -1,4 +1,4 @@
-import { User } from "@modules/user/entity/User";
+import { User } from "@modules/user/user-entity";
 import { DataSource } from "typeorm";
 
 const postgresConfig = {

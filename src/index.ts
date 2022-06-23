@@ -1,5 +1,7 @@
-import { main } from './server';
+import { configuration } from '@app-config';
+import { App } from './server';
 
-(async (): Promise<void> => {
-    await main();
-})();
+// TODO: register routes
+
+const app = new App(configuration);
+app.startServer();
