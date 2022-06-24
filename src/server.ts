@@ -29,7 +29,7 @@ export class App {
     if (process.env.NODE_ENV === 'development') app.use(morgan('dev'));
 
     // TODO: Register routes
-    app.use(userRouter);
+    app.use('/api', userRouter);
 
     app.get('/', (_, res) => {
         res.json({"message": "All is fine."});
