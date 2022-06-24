@@ -10,10 +10,11 @@
       "node": ">=16.0.0"
    },
    "scripts": {
-      "start": "ts-node src/index.ts",
-      "build": "tsc",
-      "serve": "export NODE_ENV=production && yarn build && yarn start",
+      "start": "export NODE_ENV=production && ts-node src/index.ts",
       "dev": "export NODE_ENV=development && nodemon --exec \"ts-node\" src/index.ts",
+      "serve": "yarn build && yarn start",
+      "build": "yarn clean && tsc",
+      "clean": "rm -rf dist",
       "typeorm": "typeorm-ts-node-commonjs"
    },
    "dependencies": {
@@ -36,7 +37,6 @@
       "morgan": "^1.10.0",
       "nodemon": "^2.0.16",
       "ts-node": "10.7.0",
-      "tsconfig-paths": "^4.0.0",
-      "typescript": "4.5.2"
+      "tsconfig-paths": "^4.0.0"
    }
 }

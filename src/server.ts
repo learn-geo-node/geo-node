@@ -1,5 +1,5 @@
 import { AppConfiguration } from '@app-config';
-import { notFoundHandler } from '@middlewares/errorHandlers';
+import { handleAnyError, notFoundHandler } from '@middlewares/errorHandlers';
 import express from 'express'
 import cors from 'cors';
 import morgan from 'morgan';
@@ -29,13 +29,14 @@ export class App {
     if (process.env.NODE_ENV === 'development') app.use(morgan('dev'));
 
     // TODO: Register routes
-    app.use('/api', userRouter);
+    app.use('/api/users', userRouter);
 
     app.get('/', (_, res) => {
         res.json({"message": "All is fine."});
     });
 
     app.use(notFoundHandler);
+    app.use(handleAnyError);
 
     return new Promise((resolve, reject) => {
       app.listen(port, () => {
