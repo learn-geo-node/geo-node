@@ -1,7 +1,11 @@
 import { AppConfiguration } from '@app-config';
 import { notFoundHandler } from '@middlewares/errorHandlers';
 import express from 'express'
+import cors from 'cors';
+import morgan from 'morgan';
 import { Database } from './db';
+import validateCustomEnv from '@utils/validateCustomEnv';
+import userRouter from 'modules/user/user-router';
 
 export class App {
   databaseInstance: void;
@@ -13,11 +17,20 @@ export class App {
   }
 
   startServer({ port = this.configuration.port } = {}): Promise<void> {
+
+    validateCustomEnv();
+
     const app = express();
 
     app.use(express.json());
+    app.use(cors());
+
+    // Logger
+    if (process.env.NODE_ENV === 'development') app.use(morgan('dev'));
 
     // TODO: Register routes
+    app.use(userRouter);
+
     app.get('/', (_, res) => {
         res.json({"message": "All is fine."});
     });

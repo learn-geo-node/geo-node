@@ -1,13 +1,14 @@
+import config from 'config';
 import { User } from "@modules/user/user-entity";
 import { DataSource } from "typeorm";
 
-const postgresConfig = {
-  host: process.env.POSTGRES_HOST,
-  port: Number(process.env.POSTGRES_PORT) ,
-  username: process.env.POSTGRES_USER,
-  password: process.env.POSTGRES_PASSWORD,
-  database: process.env.POSTGRES_DB
-};
+const postgresConfig = config.get<{
+  host: string;
+  port: number;
+  username: string;
+  password: string;
+  database: string;
+}>('postgresConfig');
 
 export const AppDataSource = new DataSource({
   ...postgresConfig,

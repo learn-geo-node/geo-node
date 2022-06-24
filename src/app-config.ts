@@ -1,9 +1,10 @@
 import dotenv from 'dotenv';
+import config from 'config';
 
 dotenv.config();
 
 export const configuration = {
-  port: process.env.PORT
+  port: config.get<number>('port')
 } as const;
 
 export type AppConfiguration = typeof configuration;
