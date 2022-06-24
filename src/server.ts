@@ -5,7 +5,7 @@ import cors from 'cors';
 import morgan from 'morgan';
 import { Database } from './db';
 import validateCustomEnv from '@utils/validateCustomEnv';
-import userRouter from 'modules/user/user-router';
+import userRouter from '@modules/user/user-router';
 
 export class App {
   databaseInstance: void;
