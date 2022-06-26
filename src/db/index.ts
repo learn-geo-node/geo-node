@@ -19,4 +19,12 @@ export class Database {
     })
     .catch(error => console.error(error)); 
   }
+
+  static closeConnection() {
+    AppDataSource.destroy()
+      .then(async () => {  
+        console.log('Database connection destroyed.')
+    })
+    .catch(error => console.error(error)); 
+  }
 }

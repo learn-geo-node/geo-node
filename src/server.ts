@@ -1,26 +1,30 @@
-import { AppConfiguration } from '@app-config';
-import { handleAnyError, notFoundHandler } from '@middlewares/errorHandlers';
 import express from 'express'
 import cors from 'cors';
 import morgan from 'morgan';
+import { AppConfiguration } from '@/app-config';
 import { Database } from './db';
-import validateCustomEnv from '@utils/validateCustomEnv';
-import userRouter from '@modules/user/user-router';
+import validateCustomEnv from '@/utils/validateCustomEnv';
+import userRouter from '@/modules/user/user-route';
+import { handleAnyError, notFoundHandler } from '@/middlewares/errorHandlers';
+import { shutdownConnections } from './utils/shutdownConnections';
+import { Server } from 'http';
 
 export class App {
   databaseInstance: void;
   configuration: AppConfiguration;
+  server: Server
 
   constructor(configuration: AppConfiguration) {
     this.configuration = configuration;
     this.databaseInstance = Database.initConnection();
+    this.server = this.runServer();
   }
 
-  startServer({ port = this.configuration.port } = {}): Promise<void> {
+  runServer({ port = this.configuration.port } = {}) {
+
+    const app = express()
 
     validateCustomEnv();
-
-    const app = express();
 
     app.use(express.json());
     app.use(cors());
@@ -38,13 +42,18 @@ export class App {
     app.use(notFoundHandler);
     app.use(handleAnyError);
 
-    return new Promise((resolve, reject) => {
-      app.listen(port, () => {
-        console.log(`> [node server] Server listening at http://localhost:${port}`);
-        resolve();
-      }).once('error', reject)
-    });
-}
+    return app.listen(port, () => {
+      console.log(`> [node server] Server listening at http://localhost:${port}`);
+    })
+  }
+
+  initServerConnection() {
+    const signals = ["SIGTERM", "SIGINT"];
+
+    for (let i = 0; i < signals.length; i++) {
+      shutdownConnections(signals[i], this.server);
+    }
+  }
 }
 
 

@@ -1,4 +1,4 @@
-import { HttpError, InternalServerError } from "@errors";
+import { HttpError, InternalServerError } from "@/errors";
 
 export const handleError = (err: unknown): never => {
   if (err instanceof HttpError) {

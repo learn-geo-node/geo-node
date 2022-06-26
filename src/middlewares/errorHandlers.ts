@@ -1,4 +1,4 @@
-import { HttpError, HttpErrorMessages, NotFoundError } from "@errors";
+import { HttpError, HttpErrorMessages, NotFoundError } from "@/errors";
 import { NextFunction, Request, Response } from "express";
 
 export function handleAnyError(
