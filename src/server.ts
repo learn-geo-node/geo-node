@@ -1,6 +1,7 @@
 import express from 'express'
 import cors from 'cors';
 import morgan from 'morgan';
+import { Express } from 'express-serve-static-core';
 import { AppConfiguration } from '@/app-config';
 import { Database } from './db';
 import validateCustomEnv from '@/utils/validateCustomEnv';
@@ -10,39 +11,38 @@ import { shutdownConnections } from './utils/shutdownConnections';
 import { Server } from 'http';
 
 export class App {
+  app: Express;
   databaseInstance: void;
   configuration: AppConfiguration;
   server: Server
 
   constructor(configuration: AppConfiguration) {
+    this.app = express();
     this.configuration = configuration;
     this.databaseInstance = Database.initConnection();
     this.server = this.runServer();
   }
 
-  runServer({ port = this.configuration.port } = {}) {
-
-    const app = express()
-
+  private runServer({ port = this.configuration.port } = {}) {
     validateCustomEnv();
 
-    app.use(express.json());
-    app.use(cors());
+    this.app.use(express.json());
+    this.app.use(cors());
 
     // Logger
-    if (process.env.NODE_ENV === 'development') app.use(morgan('dev'));
+    if (process.env.NODE_ENV === 'development') this.app.use(morgan('dev'));
 
     // TODO: Register routes
-    app.use('/api/users', userRouter);
+    this.app.use('/api/users', userRouter);
 
-    app.get('/', (_, res) => {
+    this.app.get('/', (_, res) => {
         res.json({"message": "All is fine."});
     });
 
-    app.use(notFoundHandler);
-    app.use(handleAnyError);
+    this.app.use(notFoundHandler);
+    this.app.use(handleAnyError);
 
-    return app.listen(port, () => {
+    return this.app.listen(port, () => {
       console.log(`> [node server] Server listening at http://localhost:${port}`);
     })
   }
