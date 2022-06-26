@@ -10,7 +10,7 @@
       "node": ">=16.0.0"
    },
    "scripts": {
-      "start": "export NODE_ENV=production && ts-node --transpile-only -r tsconfig-paths/register src/app.ts",
+      "start": "export NODE_ENV=production && tsnd --transpile-only -r tsconfig-paths/register src/app.ts",
       "dev": "export NODE_ENV=development && tsnd --respawn --transpile-only -r tsconfig-paths/register src/app.ts",
       "serve": "yarn build && yarn start",
       "build": "yarn clean && tsc",
