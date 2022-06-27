@@ -10,7 +10,14 @@ export class UserService {
   };
 
   async findUserById(userId: string) {
-    return await this.userRepository.findOne({ where: { id: userId } });
+
+    try {
+      const user = await this.userRepository.findOne({ where: { id: userId } })      
+      return user;
+    } catch (error) {
+      return;
+    }
+
   };
 
   async createUser (input: DeepPartial<User>) {

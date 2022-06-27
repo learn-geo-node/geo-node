@@ -6,7 +6,6 @@ export const shutdownConnections = (signal: string, server: Server) => {
   process.on(signal, async () => {
 
     server.close();
-
     Database.closeConnection();
 
     console.log(" Process killed with signal", signal);
