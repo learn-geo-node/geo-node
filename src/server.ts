@@ -3,7 +3,6 @@ import cors from 'cors';
 import morgan from 'morgan';
 import { Express } from 'express-serve-static-core';
 import { AppConfiguration } from '@/app-config';
-import { Database } from './db';
 import validateCustomEnv from '@/utils/validateCustomEnv';
 import userRouter from '@/modules/user/user-route';
 import { handleAnyError, notFoundHandler } from '@/middlewares/errorHandlers';
@@ -19,7 +18,6 @@ export class App {
   constructor(configuration: AppConfiguration) {
     this.app = express();
     this.configuration = configuration;
-    this.databaseInstance = Database.initConnection();
     this.server = this.runServer();
   }
 
@@ -41,7 +39,7 @@ export class App {
 
     this.app.use(notFoundHandler);
     this.app.use(handleAnyError);
-
+    
     return this.app.listen(port, () => {
       console.log(`> [node server] Server listening at http://localhost:${port}`);
     })

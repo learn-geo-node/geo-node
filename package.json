@@ -16,8 +16,8 @@
       "build": "yarn clean && tsc",
       "clean": "rm -rf dist",
       "typeorm": "typeorm-ts-node-commonjs",
-      "test": "jest",
-      "test:watch": "jest --watchAll"
+      "test": "jest --detectOpenHandles",
+      "test:watch": "yarn test --watchAll"
    },
    "dependencies": {
       "config": "^3.3.7",

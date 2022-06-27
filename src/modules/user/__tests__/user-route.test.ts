@@ -1,6 +1,5 @@
 import supertest from 'supertest';
 import { configuration } from '@/app-config';
-import { Database } from '@/db';
 import { App } from '@/server';
 import { Server } from 'http';
 import { UserService } from '../user-service';
@@ -10,11 +9,11 @@ import { randomUUID } from 'crypto';
 let app: Server;
 
 beforeAll(async () => {
+  
   app = new App(configuration).server;
 })
 afterAll(async () => {
   app.close();
-  Database.closeConnection();
 })
 describe('user route', () => {
   describe('get user route', () => {
@@ -28,14 +27,11 @@ describe('user route', () => {
           email: "kamilslimak@go.co"
         }
 
-        const findUsersServiceMock = jest.spyOn(new UserService(), "findUserById").
+        const findUsersServiceMock = jest.spyOn(new UserService, "findUserById")
         // @ts-ignore
-        mockReturnValueOnce(userPayload);
+        .mockResolvedValueOnce(userPayload)
 
-        const { statusCode } = await supertest(app)
-          .get(`/api/users/${userId}`)
-
-        expect(statusCode).toBe(200);
+        await supertest(app).get(`/api/users/${userId}`)
 
         expect(findUsersServiceMock).toReturnWith(userPayload);
       })
