@@ -1,0 +1,44 @@
+{
+   "compilerOptions": {
+      "target": "es2021",
+      "lib": [
+         "esnext"
+      ],
+      "strict": true,
+      "outDir": "./dist",
+      "rootDir": "./src",
+      "module": "commonjs",
+      "skipLibCheck": true,
+      "sourceMap": true,
+      "removeComments": true,
+      "noImplicitReturns": true,
+      "noUnusedLocals": true,
+      "moduleResolution": "node",
+      "resolveJsonModule": true,
+      "esModuleInterop": true,
+      "emitDecoratorMetadata": true,
+      "experimentalDecorators": true,
+      "strictPropertyInitialization": false,
+      "isolatedModules": false,
+      "typeRoots": [
+         "./node_modules/@types",
+      ],
+      "types": [
+         "reflect-metadata",
+         "jest",
+      ],
+      "baseUrl": "./src",
+      "paths": {
+         "@/*": [
+            "*"
+         ]
+      }
+   },
+   "include": [
+      "src/**/*",
+      "src/**/*.test.ts"
+   ],
+   "exclude": [
+      "node_modules"
+   ]
+}
