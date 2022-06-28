@@ -1,8 +1,6 @@
 import { configuration } from '@/app-config';
 import { AppDataSource } from './db/config';
 import { App } from './server';
-// TODO: register routes
-
 
 export const runApp = () => {
   AppDataSource.initialize()

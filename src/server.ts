@@ -13,7 +13,7 @@ export class App {
   app: Express;
   databaseInstance: void;
   configuration: AppConfiguration;
-  server: Server
+  server: Server;
 
   constructor(configuration: AppConfiguration) {
     this.app = express();

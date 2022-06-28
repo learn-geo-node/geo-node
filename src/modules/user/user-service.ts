@@ -6,14 +6,17 @@ export class UserService {
   private userRepository = AppDataSource.getRepository(User);
 
   async findAllUsers() {
-    return await this.userRepository.find();
+    try {
+      return await this.userRepository.find();      
+    } catch (error) {
+      return;
+    }
   };
 
   async findUserById(userId: string) {
 
     try {
-      const user = await this.userRepository.findOne({ where: { id: userId } })      
-      return user;
+      return await this.userRepository.findOne({ where: { id: userId } })      
     } catch (error) {
       return;
     }

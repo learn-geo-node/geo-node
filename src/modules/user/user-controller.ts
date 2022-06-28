@@ -2,15 +2,18 @@ import { NotFoundError } from "@/errors";
 import { Request, Response } from "express";
 import { UserService } from "./user-service";
 export class UserController {
-  static async getAllUsers(req: Request, res: Response) {
-    const userService = new UserService();
-    
-    return res.status(200).send(await userService.findAllUsers());
+  private userService: UserService;
+
+  constructor() {
+    this.userService = new UserService();
+  }
+
+  getAllUsers = async (_: Request, res: Response) => {    
+    return res.status(200).send(await this.userService.findAllUsers());
   };
 
-  static async getUserById(req: Request<{ id: string }, {}, {}>, res: Response) {
-    const userService = new UserService();
-    const user = await userService.findUserById(req.params.id);
+  getUserById = async (req: Request<{ id: string }, {}, {}>, res: Response) => {
+    const user = await this.userService.findUserById(req.params.id);
 
     if (!user) {
       return res.status(404).send(new NotFoundError());
