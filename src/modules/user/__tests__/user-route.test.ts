@@ -8,6 +8,9 @@ import { Database } from '@/db';
 
 let app: Server;
 
+beforeEach(() => {
+    jest.resetAllMocks();
+})
 beforeAll(async () => {
   app = new App(configuration).server;
 })
@@ -34,7 +37,6 @@ describe('user route', () => {
         // }
 
         const { statusCode } = await supertest(app).get(`/api/users/${userId}`);
-
         expect(statusCode).toEqual(404);
         // expect(body).toEqual(userPayload);
       })
@@ -45,7 +47,8 @@ describe('user route', () => {
         const userId = randomUUID();
         const notFoundPayload = {
           status: 404,
-          name: "NotFoundError"
+          name: "NotFoundError",
+          message: "User not found"
         }
 
         const { body, statusCode } = await supertest(app)

@@ -13,10 +13,11 @@ export class UserController {
   };
 
   getUserById = async (req: Request<{ id: string }, {}, {}>, res: Response) => {
-    const user = await this.userService.findUserById(req.params.id);
+    const { id } = req.params;
+    const user = await this.userService.findUserById(id);
 
     if (!user) {
-      return res.status(404).send(new NotFoundError());
+      return res.status(404).send(new NotFoundError(`User not found`));
     }
     
     return res.status(200).send(user);
