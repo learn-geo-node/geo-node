@@ -4,6 +4,7 @@ export enum HttpErrorMessages {
   INTERNAL_SERVER_ERROR = 'Internal Server Error',
   NOT_FOUND = 'Not Found',
   UNAUTHORIZED = 'Unauthorized',
+  CONFLICT = 'Conflict',
 }
 
 export abstract class HttpError extends Error {
@@ -39,6 +40,14 @@ export class NotFoundError extends HttpError {
   constructor(message: string = HttpErrorMessages.NOT_FOUND) {
       super(message);
       this.name = 'NotFoundError';
+  }
+}
+
+export class Conflict extends HttpError {
+  status = 409;
+  constructor(message: string = HttpErrorMessages.CONFLICT) {
+      super(message);
+      this.name = 'Conflict';
   }
 }
 
