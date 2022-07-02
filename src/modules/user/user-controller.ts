@@ -16,7 +16,7 @@ export class UserController {
     const user = await this.userService.findUserById(req.params.id);
 
     if (!user) {
-      return res.send(new NotFoundError());
+      return res.status(404).send(new NotFoundError());
     }
     
     return res.status(200).send(user);

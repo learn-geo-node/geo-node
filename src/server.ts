@@ -8,6 +8,7 @@ import userRouter from '@/modules/user/user-route';
 import { handleAnyError, notFoundHandler } from '@/middlewares/errorHandlers';
 import { shutdownConnections } from './utils/shutdownConnections';
 import { Server } from 'http';
+import { Database } from './db';
 
 export class App {
   app: Express;
@@ -18,6 +19,7 @@ export class App {
   constructor(configuration: AppConfiguration) {
     this.app = express();
     this.configuration = configuration;
+    this.databaseInstance = Database.initConnection();
     this.server = this.runServer();
   }
 
