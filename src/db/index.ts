@@ -1,20 +1,24 @@
 require('dotenv').config()
+import { handleError } from '@/utils/handleError';
 import 'reflect-metadata';
 import { AppDataSource } from './config';
 
 export class Database {
-  static initConnection() {
-      AppDataSource.initialize()
-      .then(() => {
-        console.log("> [postgres db] Database connection initialized successfully.")
-      })
+  async initConnection() {
+    try {
+      await AppDataSource.initialize()
+      console.log("> [postgres db] Database connection initialized successfully.") 
+    } catch (error) {
+      handleError(error);
+    }
   }
 
-  static closeConnection() {
-    AppDataSource.destroy()
-      .then(async () => {  
-        console.log('Database connection destroyed.')
-    })
-    .catch(error => console.error(error)); 
+  async closeConnection() {
+    try {
+      await AppDataSource.destroy();
+      console.log(' > [postgres db] Database connection destroyed.')      
+    } catch (error) {
+      handleError(error);
+    } 
   }
 }
