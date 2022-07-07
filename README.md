@@ -7,8 +7,12 @@ run this commands from root directory.
 
 ### build
 
-    docker-compose build
+    make build-dev
 	
 ### run
 
-    docker-compose up
+    make start-dev
+
+
+
+### rest of commands can be found in Makefile.
