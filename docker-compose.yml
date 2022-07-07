@@ -10,7 +10,7 @@ services:
     env_file:
       - ./.env
     ports:
-      - 3050:3050
+      - ${PORT}:${PORT}
     volumes:
       - /app/node_modules
       - ./:/app
