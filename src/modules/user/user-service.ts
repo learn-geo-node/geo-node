@@ -6,24 +6,20 @@ export class UserService {
   private userRepository = AppDataSource.getRepository(User);
 
   async findAllUsers() {
-    try {
-      return await this.userRepository.find();      
-    } catch (error) {
-      return;
-    }
-  };
+    return this.userRepository
+      .find()
+      .then((res) => res)
+      .catch(() => undefined);
+  }
 
   async findUserById(userId: string) {
+    return this.userRepository
+      .findOne({ where: { id: userId } })
+      .then((res) => res)
+      .catch(() => undefined);
+  }
 
-    try {
-      return await this.userRepository.findOne({ where: { id: userId } })      
-    } catch (error) {
-      return;
-    }
-
-  };
-
-  async createUser (input: DeepPartial<User>) {
+  async createUser(input: DeepPartial<User>) {
     return this.userRepository.save(this.userRepository.create(input));
-  };
+  }
 }

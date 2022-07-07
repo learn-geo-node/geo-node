@@ -14,7 +14,6 @@ export const AppDataSource = new DataSource({
   type: 'postgres',
   synchronize: true,
   logging: false,
-  // TODO: investigate do we need ssl config here.
   entities: [User],
   migrations: ['src/migrations/**/*{.ts,.js}'],
   subscribers: ['src/subscribers/**/*{.ts,.js}'],
