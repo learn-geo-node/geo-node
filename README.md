@@ -7,8 +7,8 @@ run this commands from root directory.
 
 ### build
 
-    docker-compose build
+    make build-dev
 	
 ### run
 
-    docker-compose up
+    make up-dev
