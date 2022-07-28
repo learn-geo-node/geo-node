@@ -16,12 +16,12 @@
       "build": "yarn clean && tsc",
       "clean": "rm -rf dist",
       "typeorm": "typeorm-ts-node-commonjs",
-      "test": "jest --detectOpenHandles",
+      "test": "jest --detectOpenHandles --setupFiles dotenv/config",
       "test:watch": "yarn test --watchAll",
       "prepare": "husky install"
    },
    "dependencies": {
-      "argon2": "^0.28.5",
+      "argon2": "^0.28.7",
       "class-validator": "^0.13.2",
       "config": "^3.3.7",
       "cors": "^2.8.5",

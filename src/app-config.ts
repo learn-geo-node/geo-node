@@ -1,5 +1,15 @@
-export const configuration = {
-  port: process.env.PORT,
-} as const;
+export class AppConfiguration {
+  port: string;
+  static instance: AppConfiguration;
 
-export type AppConfiguration = typeof configuration;
+  constructor() {
+    this.port = process.env.PORT as string;
+  }
+
+  static getInstance() {
+    if (!this.instance) {
+      this.instance = new AppConfiguration();
+    }
+    return this.instance;
+  }
+};

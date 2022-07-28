@@ -15,12 +15,21 @@ export class App {
   databaseInstance: Database;
   configuration: AppConfiguration;
   server: Server;
+  static instance: App;
+  static configuration: AppConfiguration;
 
-  constructor(configuration: AppConfiguration) {
+  constructor() {
     this.app = express();
-    this.configuration = configuration;
-    this.databaseInstance = new Database();
+    this.configuration = AppConfiguration.getInstance();
+    this.databaseInstance = Database.getInstance();
     this.server = this.runServer();
+  }
+
+  static getInstance() {
+    if (!this.instance) {
+      this.instance = new App();
+    }
+    return this.instance;
   }
 
   private runServer({ port = this.configuration.port } = {}) {
@@ -55,8 +64,6 @@ export class App {
 
   async initServerConnection() {
     const signals = ["SIGTERM", "SIGINT"];
-
-    await this.databaseInstance.initConnection();
 
     for (let i = 0; i < signals.length; i++) {
       shutdownConnections(signals[i], this.databaseInstance, this.closeServerConnection.bind(this));
