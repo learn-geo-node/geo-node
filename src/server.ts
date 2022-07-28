@@ -8,16 +8,18 @@ import userRouter from '@/modules/user/user-route';
 import { handleAnyError, notFoundHandler } from '@/middlewares/errorHandlers';
 import { shutdownConnections } from './utils/shutdownConnections';
 import { Server } from 'http';
+import { Database } from './db';
 
 export class App {
   app: Express;
-  databaseInstance: void;
+  databaseInstance: Database;
   configuration: AppConfiguration;
   server: Server;
 
   constructor(configuration: AppConfiguration) {
     this.app = express();
     this.configuration = configuration;
+    this.databaseInstance = new Database();
     this.server = this.runServer();
   }
 
@@ -45,11 +47,19 @@ export class App {
     })
   }
 
-  initServerConnection() {
+  async closeServerConnection() {
+    this.server.close(() => {
+      console.log(" > [node server] Server connection closed.");
+    })
+  }
+
+  async initServerConnection() {
     const signals = ["SIGTERM", "SIGINT"];
 
+    await this.databaseInstance.initConnection();
+
     for (let i = 0; i < signals.length; i++) {
-      shutdownConnections(signals[i], this.server);
+      shutdownConnections(signals[i], this.databaseInstance, this.closeServerConnection.bind(this));
     }
   }
 }
