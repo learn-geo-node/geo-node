@@ -23,7 +23,7 @@ export class UserService {
 
   };
 
-  async createUser (input: DeepPartial<User>) {
+  async addUser (input: DeepPartial<User>) {
     return this.userRepository.save(this.userRepository.create(input));
   };
 }

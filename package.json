@@ -20,6 +20,8 @@
       "test:watch": "yarn test --watchAll"
    },
    "dependencies": {
+      "argon2": "^0.28.5",
+      "class-validator": "^0.13.2",
       "config": "^3.3.7",
       "cors": "^2.8.5",
       "envalid": "^7.3.1",

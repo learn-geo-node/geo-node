@@ -1,12 +1,11 @@
 import { Database } from "@/db";
-import { Server } from "http";
 
 
-export const shutdownConnections = (signal: string, server: Server) => {
+export const shutdownConnections = (signal: string, db: Database, closeServerConnection: () => Promise<void>) => {
   process.on(signal, async () => {
 
-    server.close();
-    Database.closeConnection();
+    await closeServerConnection();
+    await db.closeConnection();
 
     console.log(" Process killed with signal", signal);
 

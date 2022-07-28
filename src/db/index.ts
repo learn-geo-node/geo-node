@@ -1,12 +1,23 @@
+import { handleError } from '@/utils/handleError';
 import 'reflect-metadata';
 import { AppDataSource } from './config';
 
 export class Database {
-  static closeConnection() {
-    AppDataSource.destroy()
-      .then(async () => {  
-        console.log('Database connection destroyed.')
-    })
-    .catch(error => console.error(error)); 
+  async initConnection() {
+    try {
+      await AppDataSource.initialize()
+      console.log("> [postgres db] Database connection initialized successfully.") 
+    } catch (error) {
+      handleError(error);
+    }
+  }
+
+  async closeConnection() {
+    try {
+      await AppDataSource.destroy();
+      console.log(' > [postgres db] Database connection destroyed.')      
+    } catch (error) {
+      handleError(error);
+    } 
   }
 }

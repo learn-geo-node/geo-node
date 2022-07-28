@@ -1,0 +1,44 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+!define DEVICONS https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/master/devicons
+!define FONTAWESOME https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/master/font-awesome-5
+' uncomment the following line and comment the first to use locally
+' !include C4_Container.puml
+!include DEVICONS/angular.puml
+!include DEVICONS/dotnet.puml
+!include DEVICONS/java.puml
+!include DEVICONS/aws.puml
+!include DEVICONS/postgresql.puml
+!include DEVICONS/msql_server.puml
+!include FONTAWESOME/server.puml
+!include FONTAWESOME/envelope.puml
+
+LAYOUT_TOP_DOWN()
+' LAYOUT_AS_SKETCH()
+' LAYOUT_WITH_LEGEND()
+
+title Container diagram for Internet Banking System
+
+Person(user, User, "A user of the app, with personal geolocation data")
+' Person(admin, Admin, "An admin user of the app")
+
+System_Boundary(c1, "Geolocation Service") {
+    Container(spa, "Single-Page App", "JavaScript, Angular", "", "angular")
+    Container(api, "Application API", "JavaScript, Node", "", "angular")
+    ContainerDb(db, "Application Database", "PostgreSQL", "", "postgresql")
+    
+}
+
+Container(serverless, "Geolocation Lambda", "AWS", "", "aws")
+System_Ext(email_system, "E-Mail System", "", "envelope")
+System_Ext(geolocation_api, "Geolocation API", "ipstack.com", "envelope")
+
+Rel_D(user, spa, "Uses", "HTTPS")
+' Rel(admin, spa, "Uses", "HTTPS")
+Rel_D(spa, api, "Uses", "REST,HTTPS")
+Rel_L(api, db, "Uses", "SQL")
+Rel_R(api, email_system, "Sends e-mail using", "SMTP")
+Rel_U(email_system, user, "Sends e-mail to", "SMTP")
+Rel_U(serverless, api, "Sends e-mail using", "SMTP")
+Rel_R(geolocation_api, serverless, "Sends data", "")
+@enduml
