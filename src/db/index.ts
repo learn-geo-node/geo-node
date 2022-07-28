@@ -1,4 +1,3 @@
-require('dotenv').config()
 import { handleError } from '@/utils/handleError';
 import 'reflect-metadata';
 import { AppDataSource } from './config';
