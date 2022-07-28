@@ -20,7 +20,15 @@ export class UserService {
     } catch (error) {
       return;
     }
+  };
 
+  async deleteUserById(userId: string) {
+
+    try {
+      return await this.userRepository.delete({ id: userId })      
+    } catch (error) {
+      return;
+    }
   };
 
   async addUser (input: DeepPartial<User>) {
