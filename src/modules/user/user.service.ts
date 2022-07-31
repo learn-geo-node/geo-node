@@ -1,9 +1,17 @@
 import { AppDataSource } from '@/db/config';
 import { DeepPartial } from 'typeorm';
-import { User } from './user-entity';
+import { User } from './user.entity';
 
 export class UserService {
   private userRepository = AppDataSource.getRepository(User);
+  static instance: UserService;
+
+  static getInstance() {
+    if (!this.instance) {
+      this.instance = new UserService();
+    }
+    return this.instance;
+  }
 
   async findAllUsers() {
     try {

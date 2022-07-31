@@ -4,11 +4,12 @@ import morgan from 'morgan';
 import { Express } from 'express-serve-static-core';
 import { AppConfiguration } from '@/app-config';
 import validateCustomEnv from '@/utils/validateCustomEnv';
-import userRouter from '@/modules/user/user-route';
 import { handleAnyError, notFoundHandler } from '@/middlewares/errorHandlers';
 import { shutdownConnections } from './utils/shutdownConnections';
 import { Server } from 'http';
 import { Database } from './db';
+import userRoutes from './modules/user/routes';
+import { BASE_USER_ROUTE } from './modules/user/routes/interface';
 
 export class App {
   app: Express;
@@ -42,7 +43,12 @@ export class App {
     if (process.env.NODE_ENV === 'development') this.app.use(morgan('dev'));
 
     // TODO: Register routes
-    this.app.use('/api/users', userRouter);
+    for (let route of userRoutes) {
+      this.app[route.method](
+        `${BASE_USER_ROUTE}${route.path}`,
+        route.controller
+      );
+    }
 
     this.app.get('/', (_, res) => {
         res.json({"message": "All is fine."});
