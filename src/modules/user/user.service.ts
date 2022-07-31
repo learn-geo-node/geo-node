@@ -22,7 +22,6 @@ export class UserService {
   };
 
   async findUserById(userId: string) {
-
     try {
       return await this.userRepository.findOne({ where: { id: userId } })      
     } catch (error) {
