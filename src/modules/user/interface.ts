@@ -1,7 +1,11 @@
 import { Request, Response } from "express";
 import { UserService } from "./user.service";
 
-export type HTTPMethod = "get" | "post" | "put" | "patch" | "delete";
+export const BASE_USER_ROUTE = '/api/users';
+
+type UserRouteNames = 'getAllUsers' | 'getUserById' | 'createUser' | 'updateUser' | 'deleteUser';
+type HTTPMethod = "get" | "post" | "put" | "patch" | "delete";
+type UserPaths = '' | '/:id';
 
 interface CreateUserInput {
   firstName: string;
@@ -10,10 +14,6 @@ interface CreateUserInput {
   password: string;
   passwordConfirmation: string;
 }
-
-type UserRouteNames = 'getAllUsers' | 'getUserById' | 'createUser' | 'updateUser' | 'deleteUser';
-
-type UserPaths = '' | '/:id';
 
 export interface UserRouterProps {
   service: UserService; 
@@ -24,5 +24,3 @@ export interface UserRouterProps {
     controller: (req: Request<{ id: string }, {}, CreateUserInput>, res: Response) => Promise<Response<any, Record<string, any>>>;
   }[];
 };
-
-export const BASE_USER_ROUTE = '/api/users';

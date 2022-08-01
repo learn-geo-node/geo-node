@@ -9,7 +9,7 @@ import { shutdownConnections } from './utils/shutdownConnections';
 import { Server } from 'http';
 import { Database } from './db';
 import { BASE_USER_ROUTE } from './modules/user/interface';
-import userRoutes from './modules/user/user.routes';
+import userRoutes from './modules/user/routes';
 
 export class App {
   app: Express;
