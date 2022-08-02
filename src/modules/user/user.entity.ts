@@ -3,6 +3,8 @@ import argon2 from 'argon2';
 import { IsEmail, IsString, Length, MinLength } from "class-validator";
 import { IsEqualTo } from "@/utils/isequalto.decorator";
 
+type Role = 'user' | 'admin';
+
 @Entity()
 export class User extends BaseEntity {
     @PrimaryGeneratedColumn('uuid')
@@ -46,6 +48,9 @@ export class User extends BaseEntity {
         message: 'Password should be at least 8 characters long.'
     })
     passwordConfirmation: string;
+
+    @Column({ default: 'user' })
+    role: Role
 
     @Column({ nullable: true })
     verificationCode: string
